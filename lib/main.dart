@@ -1,11 +1,13 @@
+import 'package:elpo/shared/network/local/cache_helper.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
-import 'modules/signin_page.dart';
+import 'modules/login_pages/signin_page.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   Firebase.initializeApp();
+  CacheHelper.init();
   runApp(const MyApp());
 }
 

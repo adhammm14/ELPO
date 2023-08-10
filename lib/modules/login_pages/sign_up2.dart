@@ -1,13 +1,13 @@
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
-import 'package:elpo/modules/signin_page.dart';
+import 'package:elpo/modules/login_pages/signin_page.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import '../shared/login_cubit/login_cubit.dart';
-import '../shared/login_cubit/login_states.dart';
-import '../shared/styles/colors.dart';
+import '../../shared/login_cubit/login_cubit.dart';
+import '../../shared/login_cubit/login_states.dart';
+import '../../shared/styles/colors.dart';
 
 class SignUpPage2 extends StatefulWidget {
   TextEditingController EmailController;
@@ -104,7 +104,7 @@ class _SignUpPage2State extends State<SignUpPage2> {
                                     color: lightGreyColor,
                                     borderRadius: BorderRadius.circular(15)),
                                 child: TextFormField(
-                                  controller: cubit.FullNameController,
+                                  controller: cubit.fullNameController,
                                   cursorColor: heavyGreyColor,
                                   decoration: InputDecoration(
                                     hintText: "Name",
@@ -147,7 +147,7 @@ class _SignUpPage2State extends State<SignUpPage2> {
                                     ),
                                     Expanded(
                                       child: TextFormField(
-                                        controller: cubit.PhoneController,
+                                        controller: cubit.phoneController,
                                         cursorColor: heavyGreyColor,
                                         decoration: InputDecoration(
                                           hintText: "Phone Number",
@@ -269,7 +269,7 @@ class _SignUpPage2State extends State<SignUpPage2> {
                                 builder: (context) => InkWell(
                                   onTap: () {
                                     if (formKey.currentState!.validate()) {
-                                      cubit.registerAccount(cubit.FullNameController,EmailController,PasswordController,cubit.PhoneController,cubit.gender);
+                                      cubit.registerAccount(cubit.fullNameController,EmailController,PasswordController,cubit.phoneController,cubit.gender);
                                       print("SignUp done!");
                                     }
                                   },

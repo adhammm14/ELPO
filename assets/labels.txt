@@ -1,0 +1,3 @@
+0 Salute
+1 bad
+2 normal

@@ -1,18 +1,20 @@
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
-import 'package:elpo/modules/sign_up1.dart';
+import 'package:elpo/modules/login_pages/sign_up2.dart';
+import 'package:elpo/modules/login_pages/signin_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_svg/svg.dart';
 
 import '../../shared/login_cubit/login_cubit.dart';
 import '../../shared/login_cubit/login_states.dart';
-import '../shared/styles/colors.dart';
+import '../../shared/styles/colors.dart';
 
-class LoginPage extends StatelessWidget {
-  LoginPage({super.key});
+class SignUpPage1 extends StatelessWidget {
+  SignUpPage1({super.key});
 
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passController = TextEditingController();
+  var EmailController = TextEditingController();
+  var PasswordController = TextEditingController();
+  var ConfirmPasswordController = TextEditingController();
   var formKey = GlobalKey<FormState>();
 
   @override
@@ -39,15 +41,23 @@ class LoginPage extends StatelessWidget {
                   Column(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
+                      const Text(
+                        "ELPO Sign",
+                        style: TextStyle(
+                          color: Colors.green,
+                          fontSize: 40.0,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                       Container(
                         padding: const EdgeInsets.all(20),
                         margin: const EdgeInsets.symmetric(horizontal: 15),
-                        decoration: BoxDecoration(
-                            color: whiteColor,
-                            borderRadius: const BorderRadius.only(
-                                topLeft: Radius.circular(10),
-                                topRight: Radius.circular(10),
-                            ),
+                        decoration: const BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(10),
+                            topRight: Radius.circular(10),
+                          ),
                         ),
                         child: Form(
                           key: formKey,
@@ -57,7 +67,7 @@ class LoginPage extends StatelessWidget {
                             children: [
                               const Center(
                                 child: Text(
-                                  "SignIn",
+                                  "Create Account",
                                   style: TextStyle(
                                       fontSize: 35,
                                       fontWeight: FontWeight.w600),
@@ -68,7 +78,7 @@ class LoginPage extends StatelessWidget {
                               ),
                               Center(
                                 child: Text(
-                                  "SignIn to your account to start using app.",
+                                  "Create your account today. Join us and enjoy using Elpo app.",
                                   style: TextStyle(
                                     color: heavyGreyColor,
                                     fontSize: 18,
@@ -87,7 +97,7 @@ class LoginPage extends StatelessWidget {
                                     color: lightGreyColor,
                                     borderRadius: BorderRadius.circular(15)),
                                 child: TextFormField(
-                                  controller: emailController,
+                                  controller: EmailController,
                                   cursorColor: heavyGreyColor,
                                   decoration: InputDecoration(
                                     hintText: "Email",
@@ -116,7 +126,7 @@ class LoginPage extends StatelessWidget {
                                     color: lightGreyColor,
                                     borderRadius: BorderRadius.circular(15)),
                                 child: TextFormField(
-                                  controller: passController,
+                                  controller: PasswordController,
                                   cursorColor: heavyGreyColor,
                                   obscureText: cubit.hidden,
                                   decoration: InputDecoration(
@@ -127,18 +137,18 @@ class LoginPage extends StatelessWidget {
                                     focusedBorder: InputBorder.none,
                                     suffixIcon: Padding(
                                       padding:
-                                          const EdgeInsets.only(right: 10.0),
+                                      const EdgeInsets.only(right: 10.0),
                                       child: InkWell(
                                         onTap: () {
                                           cubit.changePassHidden();
                                         },
                                         child: cubit.hidden
                                             ? SvgPicture.asset(
-                                                "assets/icons/eye-closed.svg",
-                                              )
+                                          "assets/icons/eye-closed.svg",
+                                        )
                                             : SvgPicture.asset(
-                                                "assets/icons/eye-opened.svg",
-                                              ),
+                                          "assets/icons/eye-opened.svg",
+                                        ),
                                       ),
                                     ),
                                     suffixIconConstraints: const BoxConstraints(
@@ -155,24 +165,68 @@ class LoginPage extends StatelessWidget {
                                   },
                                 ),
                               ),
-                              TextButton(
-                                  onPressed: () {},
-                                  child: Text(
-                                    "Forgot Password?",
-                                    style: TextStyle(
-                                        color: greenColor,
-                                        fontSize: 17,
-                                        fontWeight: FontWeight.w600),
-                                  )),
                               const SizedBox(
-                                height: 10,
+                                height: 20,
+                              ),
+                              Container(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 10, vertical: 3),
+                                decoration: BoxDecoration(
+                                    color: lightGreyColor,
+                                    borderRadius: BorderRadius.circular(15)),
+                                child: TextFormField(
+                                  controller: ConfirmPasswordController,
+                                  cursorColor: heavyGreyColor,
+                                  obscureText: cubit.hidden2,
+                                  decoration: InputDecoration(
+                                    hintText: "Confirm Password",
+                                    hintStyle: TextStyle(
+                                        color: heavyGreyColor, fontSize: 18),
+                                    border: InputBorder.none,
+                                    focusedBorder: InputBorder.none,
+                                    suffixIcon: Padding(
+                                      padding:
+                                      const EdgeInsets.only(right: 10.0),
+                                      child: InkWell(
+                                        onTap: () {
+                                          cubit.changePassHidden2();
+                                        },
+                                        child: cubit.hidden2
+                                            ? SvgPicture.asset(
+                                          "assets/icons/eye-closed.svg",
+                                        )
+                                            : SvgPicture.asset(
+                                          "assets/icons/eye-opened.svg",
+                                        ),
+                                      ),
+                                    ),
+                                    suffixIconConstraints: const BoxConstraints(
+                                        minWidth: 35,
+                                        maxHeight: 40,
+                                        minHeight: 35,
+                                        maxWidth: 40),
+                                  ),
+                                  validator: (value) {
+                                    if (value!.isEmpty || value.length < 8) {
+                                      return "Please Enter More than 8 Characters";
+                                    }
+                                    if (value != PasswordController.text) {
+                                      return 'Passwords are not identical';
+                                    }
+                                    return null;
+                                  },
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 30,
                               ),
                               ConditionalBuilder(
                                 condition: state is! LoginLoadingState,
                                 builder: (context) => InkWell(
                                   onTap: () {
                                     if (formKey.currentState!.validate()) {
-                                      cubit.loginAccount(emailController, passController);
+                                      print("email: ${EmailController.text}, pass:${PasswordController.text}");
+                                      Navigator.push(context, MaterialPageRoute(builder: (context)=>SignUpPage2(EmailController,PasswordController)));
                                     }
                                   },
                                   child: Container(
@@ -190,7 +244,7 @@ class LoginPage extends StatelessWidget {
                                     ),
                                     child: Center(
                                       child: Text(
-                                        "Login",
+                                        "Continue",
                                         style: TextStyle(
                                             color: blackColor,
                                             fontSize: 20,
@@ -210,7 +264,7 @@ class LoginPage extends StatelessWidget {
                               ),
                               Center(
                                 child: Text(
-                                  "Or sign in with",
+                                  "Or continue with",
                                   style: TextStyle(
                                     fontSize: 18,
                                     fontWeight: FontWeight.w500,
@@ -287,7 +341,7 @@ class LoginPage extends StatelessWidget {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Text(
-                                    "Don't have an account?",
+                                    "Have account?",
                                     style: TextStyle(
                                         color: blackColor,
                                         fontSize: 15,
@@ -295,10 +349,10 @@ class LoginPage extends StatelessWidget {
                                   ),
                                   TextButton(
                                       onPressed: () {
-                                        Navigator.push(context, MaterialPageRoute(builder: (context)=>SignUpPage1()));
+                                        Navigator.push(context, MaterialPageRoute(builder: (context)=>LoginPage()));
                                       },
                                       child: Text(
-                                        "Create Account",
+                                        "Sign In",
                                         style: TextStyle(
                                             color: greenColor,
                                             fontSize: 15,
